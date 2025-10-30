@@ -29,9 +29,9 @@
 	<div class="relative bg-cover bg-center text-white p-6 mb-6" style="background-image: url('https://lan.go.id/wp-content/uploads/2022/06/WhatsApp-Image-2022-06-24-at-13.43.42-1024x682.jpeg')">
 		<div class="absolute inset-0 bg-[#c2E7F6] opacity-75"></div>
 		<div class="relative z-10 text-center">
-			<h1 class="text-4xl font-bold text-blue-900">SIREPSU</h1>
+			<h1 class="text-4xl font-bold text-blue-900">MAKARTIDAS</h1>
 			<p class="text-2xl mt-2 text-blue-800">Sistem Informasi Reviu Penyelenggaraan Statistik Sektoral Unit Kerja</p>
-			<p class="text-2xl mt-2 text-blue-800">Pembinaan Statistik Sektoral dan Mini EPSS Internal Lembaga Administrasi Negara</p>
+			<p class="text-2xl mt-2 text-blue-800">Makarti 5.0 untuk Pembinaan Statistik dan Data Sektoral Internal LAN</p>
 		</div>
 	</div>
 

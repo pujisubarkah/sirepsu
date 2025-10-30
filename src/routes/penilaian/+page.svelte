@@ -1,8 +1,6 @@
 <script lang="ts">
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import KegiatanStatistik from '$lib/components/KegiatanStatistik.svelte';
-	import Radar from '$lib/components/Radar.svelte';
 
 	let showForm = false;
 	let namaKegiatan = '';
@@ -101,9 +99,9 @@
 	<div class="relative bg-cover bg-center text-white p-6 mb-6" style="background-image: url('https://lan.go.id/wp-content/uploads/2022/06/WhatsApp-Image-2022-06-24-at-13.43.42-1024x682.jpeg')">
 		<div class="absolute inset-0 bg-[#c2E7F6] opacity-75"></div>
 		<div class="relative z-10 text-center">
-			<h1 class="text-4xl font-bold text-blue-900">SIREPSU</h1>
+			<h1 class="text-4xl font-bold text-blue-900">MAKARTIDAS</h1>
 			<p class="text-2xl mt-2 text-blue-800">Sistem Informasi Reviu Penyelenggaraan Statistik Sektoral Unit Kerja</p>
-			<p class="text-2xl mt-2 text-blue-800">Pembinaan Statistik Sektoral dan Mini EPSS Internal Lembaga Administrasi Negara</p>
+			<p class="text-2xl mt-2 text-blue-800">Makarti 5.0 untuk Pembinaan Statistik dan Data Sektoral Internal LAN</p>
 		</div>
 	</div>
 
@@ -197,10 +195,18 @@
 		<!-- Components Section -->
 		<div class="flex flex-col md:flex-row gap-4 mt-4">
 			<div class="w-full md:w-3/4">
-				<KegiatanStatistik />
+				<!-- KegiatanStatistik component removed due to SSR issues -->
+				<div class="bg-white border border-[#c2E7F6] rounded-lg p-6 shadow-md">
+					<h3 class="text-lg font-semibold text-blue-900 mb-6 text-center">ANALISIS KEGIATAN STATISTIK</h3>
+					<p class="text-gray-500">Chart akan ditampilkan di sini (ApexCharts tidak kompatibel dengan SSR)</p>
+				</div>
 			</div>
 			<div class="w-full md:w-1/4">
-				<Radar />
+				<!-- Radar component removed due to SSR issues -->
+				<div class="bg-white border border-[#c2E7F6] rounded-lg p-6 shadow-md">
+					<h3 class="text-lg font-semibold text-blue-900 mb-4 text-center">RADAR CAPAIAN EPSS</h3>
+					<p class="text-gray-500">Chart akan ditampilkan di sini (ApexCharts tidak kompatibel dengan SSR)</p>
+				</div>
 			</div>
 		</div>
 	</div>

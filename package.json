@@ -1,5 +1,5 @@
 {
-	"name": "sirepsu",
+	"name": "makartidas",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -9,13 +9,17 @@
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"db:generate": "drizzle-kit generate",
+		"db:push": "drizzle-kit push",
+		"db:migrate": "drizzle-kit migrate"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.1.0",
 		"@sveltejs/kit": "^2.43.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.0",
 		"@tailwindcss/postcss": "^4.1.16",
+		"@types/node": "^24.9.2",
 		"autoprefixer": "^10.4.21",
 		"postcss": "^8.5.6",
 		"svelte": "^5.39.5",
@@ -25,7 +29,14 @@
 		"vite": "^7.1.7"
 	},
 	"dependencies": {
-		"chart.js": "^4.5.1",
-		"svelte-chartjs": "^3.1.5"
+		"apexcharts": "^5.3.5",
+		"dotenv": "^17.2.3",
+		"drizzle-kit": "^0.31.6",
+		"drizzle-orm": "^0.44.7",
+		"layercake": "^10.0.2",
+		"pg": "^8.16.3",
+		"postgres": "^3.4.7",
+		"svelte-apexcharts": "^1.0.2",
+		"svelte-quill": "^1.2.0"
 	}
 }

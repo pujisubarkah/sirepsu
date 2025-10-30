@@ -6,6 +6,8 @@
 </script>
 
 <svelte:head>
+	<title>MAKARTIDAS - Makarti Statistik dan Data Sektoral</title>
+	<meta name="description" content="Makarti 5.0 untuk Pembinaan Statistik dan Data Sektoral Internal LAN - Dari Data Menuju Aksi — ASN Cerdas, Bangsa Kuat." />
 	<link rel="icon" href={favicon} />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
