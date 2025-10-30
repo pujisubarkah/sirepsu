@@ -1,7 +1,7 @@
 <script lang="ts">
 	let isOpen = false;
 	let showLogin = false;
-	let email = '';
+	let username = '';
 	let password = '';
 	let errorMsg = '';
 
@@ -14,13 +14,13 @@
 	function closeLogin() {
 		showLogin = false;
 		errorMsg = '';
-		email = '';
+		username = '';
 		password = '';
 	}
 	function handleLogin(event?: Event) {
 		if (event) event.preventDefault();
-		if (!email || !password) {
-			errorMsg = 'Email dan password wajib diisi.';
+		if (!username || !password) {
+			errorMsg = 'Username dan password wajib diisi.';
 			return;
 		}
 		// TODO: Integrasi login Supabase
@@ -85,6 +85,7 @@
 			<a href="/epss" class="text-white no-underline hover:text-blue-200 hover:bg-blue-700 transition p-2 rounded" onclick={toggleMenu}>
 				EPSS LAN
 			</a>
+            
 			<button onclick={() => { toggleMenu(); openLogin(); }} class="bg-blue-700 text-white px-4 py-2 rounded mt-2 hover:bg-blue-900 transition">Login</button>
 		</div>
 	</div>
@@ -93,23 +94,48 @@
 <!-- Modal Login -->
 {#if showLogin}
 	<!-- Backdrop -->
-	<div class="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-50 transition-opacity duration-300">
+	<div class="fixed inset-0 flex items-center justify-center z-50">
+		<div class="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity"></div>
+
 		<!-- Modal Container -->
-		<div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md mx-4 transform transition-all duration-300 scale-100 animate-in fade-in-0 zoom-in-95">
-			<!-- Header -->
-			<div class="text-center mb-6">
-				<div class="w-16 h-16 bg-linear-to-br from-blue-600 to-blue-800 rounded-full mx-auto mb-4 flex items-center justify-center">
-					<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-					</svg>
+		<div class="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 w-full max-w-lg mx-4 transform transition-all duration-350 motion-safe:animate-fade-in" style="backdrop-filter: blur(6px);">
+			<!-- Close Button -->
+			<button onclick={closeLogin} class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white p-2 rounded-full hover:bg-gray-100" aria-label="Close">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+			</button>
+
+			<!-- Decorative header -->
+			<div class="flex items-center gap-4 mb-4">
+				<div class="w-14 h-14 rounded-full flex items-center justify-center bg-linear-to-br from-blue-600 to-indigo-700 shadow-md">
+					<img src="/lanri.png" alt="logo" class="w-8 h-8" />
 				</div>
-				<h2 class="text-2xl font-bold text-gray-800 mb-2">Selamat Datang</h2>
-				<p class="text-gray-600 text-sm">Masuk ke akun MAKARTIDAS Anda</p>
+				<div>
+					<h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Selamat Datang di MAKARTIDAS</h2>
+					<p class="text-sm text-gray-500 dark:text-gray-300">Masuk untuk mengakses fitur dan data statistik</p>
+				</div>
+			</div>
+
+			<!-- Social login (visual only) -->
+			<div class="flex gap-3 mb-4">
+				<button type="button" onclick={() => alert('Login dengan Google belum diimplementasikan')} class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:shadow-sm bg-white">
+					<img src="/icons/google.svg" alt="google" class="w-4 h-4" />
+					<span class="text-sm text-gray-700">Masuk dengan Google</span>
+				</button>
+				<button type="button" onclick={() => alert('Login dengan SSO LAN belum diimplementasikan')} class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-linear-to-r from-indigo-600 to-blue-600 text-white shadow-sm">
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.657-1.343-3-3-3S6 9.343 6 11s1.343 3 3 3 3-1.343 3-3z"></path></svg>
+					<span class="text-sm">SSO LAN</span>
+				</button>
+			</div>
+
+			<div class="flex items-center gap-3 mb-4">
+				<div class="flex-1 h-px bg-gray-200"></div>
+				<div class="text-xs text-gray-400">atau</div>
+				<div class="flex-1 h-px bg-gray-200"></div>
 			</div>
 
 			<!-- Error Message -->
 			{#if errorMsg}
-				<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 flex items-center">
+				<div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-3 flex items-center">
 					<svg class="w-5 h-5 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
 						<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
 					</svg>
@@ -118,12 +144,10 @@
 			{/if}
 
 			<!-- Login Form -->
-			<form onsubmit={handleLogin} class="space-y-6">
+			<form onsubmit={handleLogin} class="space-y-4">
 				<!-- Email Field -->
 				<div>
-					<label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-						Email
-					</label>
+					<label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Username</label>
 					<div class="relative">
 						<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 							<svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,11 +155,11 @@
 							</svg>
 						</div>
 						<input
-							type="email"
-							id="email"
-							bind:value={email}
-							class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-gray-50 focus:bg-white"
-							placeholder="nama@domain.com"
+							type="text"
+							id="username"
+							bind:value={username}
+							class="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-150 bg-gray-50 dark:bg-slate-800 dark:border-slate-700 dark:text-gray-100"
+							placeholder="username_anda"
 							required
 						/>
 					</div>
@@ -143,9 +167,7 @@
 
 				<!-- Password Field -->
 				<div>
-					<label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-						Password
-					</label>
+					<label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Password</label>
 					<div class="relative">
 						<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 							<svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,7 +178,7 @@
 							type="password"
 							id="password"
 							bind:value={password}
-							class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-gray-50 focus:bg-white"
+							class="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-150 bg-gray-50 dark:bg-slate-800 dark:border-slate-700 dark:text-gray-100"
 							placeholder="Masukkan password"
 							required
 						/>
@@ -166,19 +188,19 @@
 				<!-- Remember Me & Forgot Password -->
 				<div class="flex items-center justify-between text-sm">
 					<label class="flex items-center">
-						<input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-						<span class="ml-2 text-gray-600">Ingat saya</span>
+						<input type="checkbox" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+						<span class="ml-2 text-gray-600 dark:text-gray-300">Ingat saya</span>
 					</label>
-					<button type="button" class="text-blue-600 hover:text-blue-800 font-medium" onclick={() => alert('Fitur lupa password akan segera hadir')}>
+					<button type="button" class="text-indigo-600 hover:text-indigo-800 font-medium" onclick={() => alert('Fitur lupa password akan segera hadir')}>
 						Lupa password?
 					</button>
 				</div>
 
 				<!-- Action Buttons -->
-				<div class="space-y-3">
+				<div class="grid gap-3">
 					<button
 						type="submit"
-						class="w-full bg-linear-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+						class="w-full bg-linear-to-r from-indigo-600 to-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-indigo-700 hover:to-blue-700 focus:ring-2 focus:ring-indigo-400 focus:ring-offset-1 transition-transform duration-150 transform hover:-translate-y-0.5 shadow-lg"
 					>
 						Masuk
 					</button>
@@ -186,7 +208,7 @@
 					<button
 						type="button"
 						onclick={closeLogin}
-						class="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200"
+						class="w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-50"
 					>
 						Batal
 					</button>
