@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import { goto } from '$app/navigation';
 
 	let showForm = false;
 	let namaKegiatan = '';
@@ -87,8 +88,8 @@
 	}
 
 	function goToQuestionnaire() {
-		// In real app, this would navigate to questionnaire page
-		alert('Navigasi ke halaman kuesioner');
+		// Navigate to the questionnaire page
+		goto('/questionnaire');
 	}
 </script>
 

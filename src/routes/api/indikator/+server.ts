@@ -4,7 +4,7 @@ import { client } from '$lib/db';
 
 export const GET: RequestHandler = async () => {
   try {
-    const rows = await client`SELECT id, created_at::text AS created_at, domain_id, domain_nama, domain_bobot, indikator_nama, indikator_bobot, indikator_id, indikator_deskripsi, indikator_penjelasan FROM simbatik.indikator ORDER BY created_at DESC`;
+    const rows = await client`SELECT id, created_at::text AS created_at, domain_id, domain_nama, domain_bobot, indikator_nama, indikator_bobot, indikator_id, indikator_deskripsi, indikator_penjelasan FROM simbatik.indikator ORDER BY id ASC`;
     return json(rows.map((r: any) => ({
       id: r.id,
       createdAt: r.created_at,

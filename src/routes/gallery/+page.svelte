@@ -2,8 +2,12 @@
   import { onMount } from 'svelte';
   import Navbar from '$lib/components/Navbar.svelte';
   import Footer from '$lib/components/Footer.svelte';
+  import { tick } from 'svelte';
+
   let images: string[] = [];
   let active: number | null = null;
+  let dialogEl: HTMLElement | null = null;
+  let prevActiveEl: HTMLElement | null = null;
 
   // generate sample images (picsum) for the gallery
   onMount(() => {
@@ -12,10 +16,24 @@
   });
 
   function open(i: number) {
+    // save previously focused element
+    prevActiveEl = document.activeElement as HTMLElement | null;
     active = i;
+    // wait DOM update then focus dialog for keyboard users
+    tick().then(() => {
+      if (dialogEl) {
+        dialogEl.focus();
+      }
+    });
   }
   function close() {
     active = null;
+    // restore focus to previous element
+    try {
+      prevActiveEl?.focus?.();
+    } catch (e) {
+      // ignore
+    }
   }
   function prev() {
     if (active === null) return;
@@ -38,6 +56,34 @@
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   });
+
+  // Focus trap for dialog: keep Tab within dialog
+  function handleDialogKeydown(e: KeyboardEvent) {
+    if (!dialogEl) return;
+    if (e.key !== 'Tab') return;
+    const focusable = Array.from(
+      dialogEl.querySelectorAll<HTMLElement>(
+        'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => el.offsetParent !== null);
+
+    if (focusable.length === 0) {
+      e.preventDefault();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const activeEl = document.activeElement as HTMLElement;
+
+    if (!e.shiftKey && activeEl === last) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && activeEl === first) {
+      e.preventDefault();
+      last.focus();
+    }
+  }
 </script>
 
 <svelte:head>
@@ -68,15 +114,23 @@
     role="dialog"
     aria-modal="true"
     tabindex="0"
-    on:click={close}
-    on:keydown={(e) => { if (e.key === 'Escape') close(); }}
-    style="padding:0; border:none; margin:0;"
     aria-label="Close lightbox"
+    on:click={close}
+    on:keydown={(e) => {
+      // allow keyboard users to close the overlay with Escape, Enter or Space
+      if (e.key === 'Escape') close();
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); close(); }
+    }}
+    style="padding:0; border:none; margin:0;"
   >
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <div
       class="relative max-w-4xl max-h-[90vh] w-full mx-4"
       role="document"
+      tabindex="-1"
       on:click|stopPropagation
+      on:keydown={handleDialogKeydown}
+      bind:this={dialogEl}
     >
       <button
         class="absolute top-2 right-2 text-white bg-black/40 p-2 rounded-full hover:bg-black/60"
